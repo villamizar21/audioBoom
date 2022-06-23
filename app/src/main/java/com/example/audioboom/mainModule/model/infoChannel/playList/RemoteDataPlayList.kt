@@ -1,14 +1,14 @@
-package com.example.audioboom.mainModule.model.channels
+package com.example.audioboom.mainModule.model.infoChannel.playList
 
 import com.example.audioboom.apiService.ApiService
-import com.example.audioboom.entities.channels.AudioClips
+import com.example.audioboom.entities.infoChannel.channelSeleccted.ChannelSelected
 import com.example.audioboom.utils.Constans
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RemoteDataChannels {
+class RemoteDataPlayList {
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(Constans.BASE_URL)
@@ -17,8 +17,8 @@ class RemoteDataChannels {
 
     private val service = retrofit.create(ApiService::class.java)
 
-    suspend fun getChannels(): AudioClips =
+    suspend fun getPlayList(id: String): ChannelSelected =
         withContext(Dispatchers.IO) {
-            service.getallaudios()
+            service.getPlaylist(id)
         }
 }

@@ -11,18 +11,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.audioboom.R
 import com.example.audioboom.databinding.ItemChannelsBinding
-import com.example.audioboom.entities.channels.Audios
+import com.example.audioboom.databinding.ItemPlayListBinding
+import com.example.audioboom.entities.channels.AudioClips
+import com.example.audioboom.entities.infoChannel.channelSeleccted.AudioClipsSelected
 import com.example.audioboom.mainModule.view.click.Click
 
-class AdapterChannels(private val listener: Click) :
-    ListAdapter<Audios, RecyclerView.ViewHolder>(ChannelDiffCallback()) {
+class AdapterInfoChannel(private val listener: Click) :
+    ListAdapter<AudioClipsSelected, RecyclerView.ViewHolder>(ChannelDiffCallback())  {
 
     private lateinit var context: Context
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         context = parent.context
-        val view = LayoutInflater.from(context).inflate(R.layout.item_channels, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.item_play_list, parent, false)
         return ViewHolder(view);
     }
 
@@ -32,9 +34,8 @@ class AdapterChannels(private val listener: Click) :
             Glide.with(holder.view)
                 .load(channel.channel.urls.logo_image.original)
                 .into(binding.channelPoster)
-            binding.channelPoster.setOnClickListener {
-                listener.clicked(channel.channel.id)
-            }
+            binding.title.text = channel.title
+            Log.e("","title-----> ${channel.title}")
         }
     }
 
@@ -44,14 +45,14 @@ class AdapterChannels(private val listener: Click) :
     }
 
     inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        val binding = ItemChannelsBinding.bind(view)
+        val binding = ItemPlayListBinding.bind(view)
     }
 
-    class ChannelDiffCallback : DiffUtil.ItemCallback<Audios>() {
-        override fun areItemsTheSame(oldItem: Audios, newItem: Audios): Boolean =
+    class ChannelDiffCallback : DiffUtil.ItemCallback<AudioClipsSelected>() {
+        override fun areItemsTheSame(oldItem: AudioClipsSelected, newItem: AudioClipsSelected): Boolean =
             oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: Audios, newItem: Audios): Boolean =
+        override fun areContentsTheSame(oldItem: AudioClipsSelected, newItem: AudioClipsSelected): Boolean =
             oldItem == newItem
 
     }

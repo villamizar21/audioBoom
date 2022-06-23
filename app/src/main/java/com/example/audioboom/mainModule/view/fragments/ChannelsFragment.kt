@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.audioboom.R
 import com.example.audioboom.databinding.FragmentChannelsBinding
 import com.example.audioboom.mainModule.view.adapter.AdapterChannels
 import com.example.audioboom.mainModule.view.click.Click
@@ -15,11 +16,12 @@ import com.example.audioboom.mainModule.viewModel.ChannelViewModel
 import kotlinx.coroutines.launch
 
 
-class ChannelsFragment : Fragment(),Click {
+class ChannelsFragment : Fragment(), Click {
 
     private lateinit var binding: FragmentChannelsBinding
     private val viewModel = ChannelViewModel()
     private lateinit var adapterChannel: AdapterChannels
+    private lateinit var fragment: Fragment
 
 
     override fun onCreateView(
@@ -40,9 +42,9 @@ class ChannelsFragment : Fragment(),Click {
 
     private fun setupRecylcerView() {
         adapterChannel = AdapterChannels(this)
-        binding.recyclerView.apply{
+        binding.recyclerView.apply {
             setHasFixedSize(true)
-            layoutManager = GridLayoutManager(context,2)
+            layoutManager = GridLayoutManager(context, 2)
             adapter = adapterChannel
         }
     }
@@ -51,7 +53,6 @@ class ChannelsFragment : Fragment(),Click {
         viewModel.let {
             it.getChannels().observe(viewLifecycleOwner) { result ->
                 adapterChannel.submitList(result.body.audio_clips)
-                Log.e("", "result del servicio---->$result")
             }
         }
     }
@@ -62,8 +63,15 @@ class ChannelsFragment : Fragment(),Click {
         }
     }
 
-    override fun clicked(value: String?) {
-
+    override fun clicked(value: Long?) {
+        val id = Bundle()
+        id.putString("id", value.toString() ?: "")
+        fragment = InfoChannelFragment()
+        fragment.arguments = id
+        requireActivity().supportFragmentManager.beginTransaction().apply {
+            replace(R.id.container_fragment, fragment)
+            addToBackStack(null)
+            commit()
+        }
     }
-
 }
