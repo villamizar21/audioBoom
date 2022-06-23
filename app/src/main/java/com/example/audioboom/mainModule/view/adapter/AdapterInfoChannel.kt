@@ -1,7 +1,6 @@
 package com.example.audioboom.mainModule.view.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,14 +9,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.audioboom.R
-import com.example.audioboom.databinding.ItemChannelsBinding
 import com.example.audioboom.databinding.ItemPlayListBinding
-import com.example.audioboom.entities.channels.AudioClips
 import com.example.audioboom.entities.infoChannel.channelSeleccted.AudioClipsSelected
-import com.example.audioboom.mainModule.view.click.Click
+import com.example.audioboom.mainModule.view.click.ClickChannel
 
-class AdapterInfoChannel(private val listener: Click) :
-    ListAdapter<AudioClipsSelected, RecyclerView.ViewHolder>(ChannelDiffCallback())  {
+class AdapterInfoChannel(private val listener: ClickChannel) :
+    ListAdapter<AudioClipsSelected, RecyclerView.ViewHolder>(ChannelDiffCallback()) {
 
     private lateinit var context: Context
     private lateinit var recyclerView: RecyclerView
@@ -29,13 +26,19 @@ class AdapterInfoChannel(private val listener: Click) :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val channel =getItem(position)
-        with(holder as ViewHolder){
+        val channel = getItem(position)
+        with(holder as ViewHolder) {
             Glide.with(holder.view)
                 .load(channel.channel.urls.logo_image.original)
                 .into(binding.channelPoster)
             binding.title.text = channel.title
-            Log.e("","title-----> ${channel.title}")
+            binding.channelPoster.setOnClickListener {
+
+                if(channel.urls.high_mp3.isNotEmpty() &&
+                    channel.title.isNotEmpty() && channel.description.isNotEmpty() &&
+                        channel.channel.urls.logo_image.original.isNotEmpty())
+                    listener.clicked(channel.urls.high_mp3, channel.title, channel.description,channel.channel.urls.logo_image.original)
+            }
         }
     }
 
@@ -49,10 +52,16 @@ class AdapterInfoChannel(private val listener: Click) :
     }
 
     class ChannelDiffCallback : DiffUtil.ItemCallback<AudioClipsSelected>() {
-        override fun areItemsTheSame(oldItem: AudioClipsSelected, newItem: AudioClipsSelected): Boolean =
+        override fun areItemsTheSame(
+            oldItem: AudioClipsSelected,
+            newItem: AudioClipsSelected
+        ): Boolean =
             oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: AudioClipsSelected, newItem: AudioClipsSelected): Boolean =
+        override fun areContentsTheSame(
+            oldItem: AudioClipsSelected,
+            newItem: AudioClipsSelected
+        ): Boolean =
             oldItem == newItem
 
     }

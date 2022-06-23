@@ -9,22 +9,24 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
+import com.example.audioboom.R
 import com.example.audioboom.databinding.FragmentInfoChannelBinding
 import com.example.audioboom.mainModule.view.adapter.AdapterInfoChannel
-import com.example.audioboom.mainModule.view.click.Click
+import com.example.audioboom.mainModule.view.click.ClickChannel
 import com.example.audioboom.mainModule.viewModel.InfoChannelViewModel
 import com.example.audioboom.mainModule.viewModel.PlayListViewModel
 import com.example.audioboom.utils.Constans
 import kotlinx.coroutines.launch
 
 
-class InfoChannelFragment : Fragment(), Click {
+class InfoChannelFragment : Fragment(), ClickChannel {
 
     private lateinit var binding: FragmentInfoChannelBinding
     private val viewModel = InfoChannelViewModel()
     private val viewModelPlayList = PlayListViewModel()
     var id = ""
     private lateinit var adapterPlayList: AdapterInfoChannel
+    private lateinit var fragment: Fragment
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,10 +44,10 @@ class InfoChannelFragment : Fragment(), Click {
     }
 
     private fun setupRecylcerView() {
-       adapterPlayList = AdapterInfoChannel(this)
+        adapterPlayList = AdapterInfoChannel(this)
         binding.recyclerView.apply {
             setHasFixedSize(true)
-            layoutManager = GridLayoutManager(context,2)
+            layoutManager = GridLayoutManager(context, 2)
             adapter = adapterPlayList
         }
     }
@@ -72,13 +74,25 @@ class InfoChannelFragment : Fragment(), Click {
         }
 
         viewModelPlayList.let {
-            it.getPlayList().observe(viewLifecycleOwner){playList ->
+            it.getPlayList().observe(viewLifecycleOwner) { playList ->
                 adapterPlayList.submitList(playList.body.audio_clips)
-                Log.e("","que fue lo que paso ${playList}")
+                Log.e("", "que fue lo que paso ${playList}")
             }
         }
     }
 
-    override fun clicked(value: Long?) {
+    override fun clicked(value: String, title: String, description: String, image: String) {
+        val song = Bundle()
+        song.putString("song", value)
+        song.putString("title", title)
+        song.putString("description", description)
+        song.putString("image", image)
+        fragment = PlayHighFragment()
+        fragment.arguments = song
+        requireActivity().supportFragmentManager.beginTransaction().apply {
+            replace(R.id.container_fragment, fragment)
+            addToBackStack(null)
+            commit()
+        }
     }
 }
