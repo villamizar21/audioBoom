@@ -1,7 +1,7 @@
 package com.example.audioboom.mainModule.model.infoChannel.playList
 
 import com.example.audioboom.apiService.ApiService
-import com.example.audioboom.entities.infoChannel.channelSeleccted.ChannelSelected
+import com.example.audioboom.models.infoChannel.channelSeleccted.ChannelSelected
 import com.example.audioboom.utils.Constans
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

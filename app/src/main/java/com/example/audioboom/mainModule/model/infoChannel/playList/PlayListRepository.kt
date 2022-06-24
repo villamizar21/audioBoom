@@ -1,6 +1,6 @@
 package com.example.audioboom.mainModule.model.infoChannel.playList
 
-import com.example.audioboom.entities.infoChannel.channelSeleccted.ChannelSelected
+import com.example.audioboom.models.infoChannel.channelSeleccted.ChannelSelected
 
 class PlayListRepository {
 

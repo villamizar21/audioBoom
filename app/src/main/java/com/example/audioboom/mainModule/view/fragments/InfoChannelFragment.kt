@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.audioboom.R
 import com.example.audioboom.databinding.FragmentInfoChannelBinding
@@ -16,6 +17,7 @@ import com.example.audioboom.mainModule.view.click.ClickChannel
 import com.example.audioboom.mainModule.viewModel.InfoChannelViewModel
 import com.example.audioboom.mainModule.viewModel.PlayListViewModel
 import com.example.audioboom.utils.Constans
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
 
@@ -47,7 +49,7 @@ class InfoChannelFragment : Fragment(), ClickChannel {
         adapterPlayList = AdapterInfoChannel(this)
         binding.recyclerView.apply {
             setHasFixedSize(true)
-            layoutManager = GridLayoutManager(context, 2)
+            layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
             adapter = adapterPlayList
         }
     }
@@ -67,6 +69,9 @@ class InfoChannelFragment : Fragment(), ClickChannel {
                 binding.description.text = details.body.channel.description
                 Glide.with(this).load(details.body.channel.urls.logo_image.original).into(image)
             }
+            it.getSnackbarMsg().observe(viewLifecycleOwner) {msg ->
+                Snackbar.make(binding.root, msg, Snackbar.LENGTH_LONG).show()
+            }
         }
 
         lifecycleScope.launch {
@@ -77,6 +82,9 @@ class InfoChannelFragment : Fragment(), ClickChannel {
             it.getPlayList().observe(viewLifecycleOwner) { playList ->
                 adapterPlayList.submitList(playList.body.audio_clips)
                 Log.e("", "que fue lo que paso ${playList}")
+            }
+            it.getSnackbarMsg().observe(viewLifecycleOwner) {msg ->
+                Snackbar.make(binding.root, msg, Snackbar.LENGTH_LONG).show()
             }
         }
     }

@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.audioboom.R
-import com.example.audioboom.entities.infoChannel.channelSeleccted.ChannelSelected
+import com.example.audioboom.models.infoChannel.channelSeleccted.ChannelSelected
 import com.example.audioboom.mainModule.model.infoChannel.playList.PlayListRepository
 import kotlinx.coroutines.launch
 

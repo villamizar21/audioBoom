@@ -22,7 +22,7 @@
             android:id="@+id/photo"
             android:layout_width="130dp"
             android:layout_height="130dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_inicio" />
     </com.google.android.material.card.MaterialCardView>
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -38,18 +38,6 @@
         app:layout_constraintTop_toBottomOf="@+id/card"
         tools:text="The Lickers" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/numbrersEpisode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        tools:text="17 posts" />
 
     <ScrollView
         android:id="@+id/scroll"
@@ -57,7 +45,7 @@
         android:layout_height="150dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numbrersEpisode">
+        app:layout_constraintTop_toBottomOf="@+id/title">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/description"

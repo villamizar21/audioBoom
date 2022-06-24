@@ -1,6 +1,6 @@
-package com.example.audioboom.entities.infoChannel.channelSeleccted
+package com.example.audioboom.models.infoChannel.channelSeleccted
 
-import com.example.audioboom.entities.channels.Channel
+import com.example.audioboom.models.channels.Channel
 
 data class AudioClipsSelected(
     val id: Long,

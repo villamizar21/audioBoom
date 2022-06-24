@@ -1,4 +1,4 @@
-package com.example.audioboom.mainModule.view
+package com.example.audioboom.mainModule.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package com.example.audioboom.entities.channels
+package com.example.audioboom.models.channels
 
 data class Channel(
     val id: Long,

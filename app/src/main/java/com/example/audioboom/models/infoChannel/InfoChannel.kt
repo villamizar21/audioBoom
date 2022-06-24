@@ -1,9 +1,10 @@
-package com.example.audioboom.entities.channels
+package com.example.audioboom.models.infoChannel
 
-data class AudioClips(
+
+data class InfoChannel(
     val window:String,
     val version:String,
     val timestamp:String,
     val api_warning:String,
-    val body: Body,
+    val body: DetailsChannel,
 )

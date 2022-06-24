@@ -10,8 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.audioboom.R
 import com.example.audioboom.databinding.ItemPlayListBinding
-import com.example.audioboom.entities.infoChannel.channelSeleccted.AudioClipsSelected
+import com.example.audioboom.models.infoChannel.channelSeleccted.AudioClipsSelected
 import com.example.audioboom.mainModule.view.click.ClickChannel
+import com.google.android.material.snackbar.Snackbar
 
 class AdapterInfoChannel(private val listener: ClickChannel) :
     ListAdapter<AudioClipsSelected, RecyclerView.ViewHolder>(ChannelDiffCallback()) {
@@ -34,10 +35,14 @@ class AdapterInfoChannel(private val listener: ClickChannel) :
             binding.title.text = channel.title
             binding.channelPoster.setOnClickListener {
 
-                if(channel.urls.high_mp3.isNotEmpty() &&
-                    channel.title.isNotEmpty() && channel.description.isNotEmpty() &&
+                try{
+                    if(channel.urls.high_mp3.isNotEmpty() &&
+                        channel.title.isNotEmpty() && channel.description.isNotEmpty() &&
                         channel.channel.urls.logo_image.original.isNotEmpty())
-                    listener.clicked(channel.urls.high_mp3, channel.title, channel.description,channel.channel.urls.logo_image.original)
+                        listener.clicked(channel.urls.high_mp3, channel.title, channel.description,channel.channel.urls.logo_image.original)
+                }catch (e: Exception){
+                    Snackbar.make(binding.root, "Error ${e.message}", Snackbar.LENGTH_LONG).show()
+                }
             }
         }
     }

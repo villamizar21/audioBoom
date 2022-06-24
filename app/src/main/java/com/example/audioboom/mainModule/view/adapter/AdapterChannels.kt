@@ -1,7 +1,6 @@
 package com.example.audioboom.mainModule.view.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.audioboom.R
 import com.example.audioboom.databinding.ItemChannelsBinding
-import com.example.audioboom.entities.channels.Audios
+import com.example.audioboom.models.channels.Audios
 import com.example.audioboom.mainModule.view.click.Click
 
 class AdapterChannels(private val listener: Click) :

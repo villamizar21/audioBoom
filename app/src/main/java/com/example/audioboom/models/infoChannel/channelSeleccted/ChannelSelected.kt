@@ -1,4 +1,4 @@
-package com.example.audioboom.entities.infoChannel.channelSeleccted
+package com.example.audioboom.models.infoChannel.channelSeleccted
 
 data class ChannelSelected(
     val window: Long,

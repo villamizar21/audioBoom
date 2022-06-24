@@ -1,8 +1,8 @@
 package com.example.audioboom.apiService
 
-import com.example.audioboom.entities.channels.AudioClips
-import com.example.audioboom.entities.infoChannel.InfoChannel
-import com.example.audioboom.entities.infoChannel.channelSeleccted.ChannelSelected
+import com.example.audioboom.models.channels.AudioClips
+import com.example.audioboom.models.infoChannel.InfoChannel
+import com.example.audioboom.models.infoChannel.channelSeleccted.ChannelSelected
 import com.example.audioboom.utils.Constans
 import retrofit2.http.GET
 import retrofit2.http.Path

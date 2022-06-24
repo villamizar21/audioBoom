@@ -1,6 +1,6 @@
 package com.example.audioboom.mainModule.model.infoChannel
 
-import com.example.audioboom.entities.infoChannel.InfoChannel
+import com.example.audioboom.models.infoChannel.InfoChannel
 
 class InfoRepository {
 

@@ -13,6 +13,7 @@ import com.example.audioboom.databinding.FragmentChannelsBinding
 import com.example.audioboom.mainModule.view.adapter.AdapterChannels
 import com.example.audioboom.mainModule.view.click.Click
 import com.example.audioboom.mainModule.viewModel.ChannelViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
 
@@ -53,6 +54,9 @@ class ChannelsFragment : Fragment(), Click {
         viewModel.let {
             it.getChannels().observe(viewLifecycleOwner) { result ->
                 adapterChannel.submitList(result.body.audio_clips)
+            }
+            it.getSnackbarMsg().observe(viewLifecycleOwner) {msg ->
+                Snackbar.make(binding.root, msg, Snackbar.LENGTH_LONG).show()
             }
         }
     }
