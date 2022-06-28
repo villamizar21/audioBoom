@@ -12,9 +12,11 @@ import com.example.audioboom.R
 import com.example.audioboom.databinding.FragmentChannelsBinding
 import com.example.audioboom.mainModule.view.adapter.AdapterChannels
 import com.example.audioboom.mainModule.view.adapter.AdapterPopular
+import com.example.audioboom.mainModule.view.adapter.AdapterRecommended
 import com.example.audioboom.mainModule.view.click.Click
 import com.example.audioboom.mainModule.viewModel.ChannelViewModel
 import com.example.audioboom.mainModule.viewModel.PopularViewModel
+import com.example.audioboom.mainModule.viewModel.RecommendViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
@@ -24,8 +26,10 @@ class ChannelsFragment : Fragment(), Click {
     private lateinit var binding: FragmentChannelsBinding
     private val viewModel = ChannelViewModel()
     private val viewModelPopular = PopularViewModel()
+    private val viewModelRecommended = RecommendViewModel()
     private lateinit var adapterChannel: AdapterChannels
     private lateinit var adapterPopular: AdapterPopular
+    private lateinit var adapterRecommended: AdapterRecommended
     private lateinit var fragment: Fragment
 
 
@@ -41,10 +45,19 @@ class ChannelsFragment : Fragment(), Click {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getData()
-        getPopular()
         setupObserver()
         setupRecylcerView()
         setupRecylcerpopular()
+        setupRecylcerRecommended()
+    }
+
+    private fun setupRecylcerRecommended() {
+        adapterRecommended = AdapterRecommended(this)
+        binding.recyclerRecommend.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+            adapter = adapterRecommended
+        }
     }
 
     private fun setupRecylcerpopular() {
@@ -77,7 +90,12 @@ class ChannelsFragment : Fragment(), Click {
         viewModelPopular.let {
             it.getPopular().observe(viewLifecycleOwner) { popular ->
                 adapterPopular.submitList(popular.body.audio_clips)
-                Log.e("","result 6 ${popular.body.audio_clips}")
+            }
+        }
+        viewModelRecommended.let{
+            it.getRecommended().observe(viewLifecycleOwner) { recommended->
+                adapterRecommended.submitList(recommended.body)
+                Log.e("","result 6 ${recommended}")
             }
         }
     }
@@ -85,12 +103,8 @@ class ChannelsFragment : Fragment(), Click {
     private fun getData() {
         lifecycleScope.launch {
             viewModel.getChannelViewModel()
-        }
-    }
-
-    private fun getPopular() {
-        lifecycleScope.launch {
             viewModelPopular.getPopularViewModel()
+            viewModelRecommended.getRecommendedViewModel()
         }
     }
 

@@ -1,5 +1,6 @@
 package com.example.audioboom.apiService
 
+import com.example.audioboom.models.recommended.Recommended
 import com.example.audioboom.models.channels.AudioClips
 import com.example.audioboom.models.infoChannel.InfoChannel
 import com.example.audioboom.models.infoChannel.channelSeleccted.ChannelSelected
@@ -14,6 +15,9 @@ interface ApiService {
 
     @GET(Constans.AUDIO+Constans.POPULAR)
     suspend fun getPopularaudios(): AudioClips
+
+    @GET(Constans.CHANNELS+Constans.RECOMMENDED)
+    suspend fun getRecomended(): Recommended
 
     @GET(Constans.CHANNELS+"/{id}")
     suspend fun getInfChannel(@Path("id") id: String): InfoChannel

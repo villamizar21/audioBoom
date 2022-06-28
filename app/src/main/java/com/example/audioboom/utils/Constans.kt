@@ -5,5 +5,6 @@ object Constans {
     const val CHANNELS = "channels"
     const val AUDIO = "audio_clips"
     const val POPULAR = "/popular"
+    const val RECOMMENDED = "/recommended"
     const val ID = "id"
 }
