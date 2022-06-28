@@ -10,7 +10,7 @@ import com.example.audioboom.models.infoChannel.InfoChannel
 import com.example.audioboom.mainModule.model.infoChannel.InfoRepository
 import kotlinx.coroutines.launch
 
-class InfoChannelViewModel:ViewModel() {
+class InfoChannelViewModel : ViewModel() {
 
     private val repository = InfoRepository()
 
@@ -20,14 +20,20 @@ class InfoChannelViewModel:ViewModel() {
     private val snackbarMsg = MutableLiveData<Int>()
     fun getSnackbarMsg() = snackbarMsg
 
-    suspend fun getInfChannelViewModel(id: String){
-        viewModelScope.launch{
+    private val loaded = MutableLiveData<Boolean>()
+    fun isLoaded() = loaded
+
+    suspend fun getInfChannelViewModel(id: String) {
+        viewModelScope.launch {
             try {
+                loaded.value = false
                 val resultService = repository.getInfChannel(id)
                 result.value = resultService
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.e("", "result del error del servicio---> ${e.message}")
                 snackbarMsg.value = R.string.main_error_server
+            } finally {
+                loaded.value = true
             }
         }
     }

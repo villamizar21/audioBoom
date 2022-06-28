@@ -20,14 +20,20 @@ class ChannelViewModel : ViewModel() {
     private val snackbarMsg = MutableLiveData<Int>()
     fun getSnackbarMsg() = snackbarMsg
 
+    private val loaded = MutableLiveData<Boolean>()
+    fun isLoaded() = loaded
+
     suspend fun getChannelViewModel() {
         viewModelScope.launch {
             try {
+                loaded.value = false
                 val resultService = repository.getChannels()
                 result.value = resultService
             } catch (e: Exception) {
                 Log.e("", "result del error del servicio---> ${e.message}")
                 snackbarMsg.value = R.string.main_error_server
+            }finally {
+                loaded.value = true
             }
         }
     }

@@ -55,25 +55,25 @@ class ChannelsFragment : Fragment(), Click {
         adapterRecommended = AdapterRecommended(this)
         binding.recyclerRecommend.apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = adapterRecommended
         }
     }
 
     private fun setupRecylcerpopular() {
-       adapterPopular = AdapterPopular(this)
-       binding.recyclerPopular.apply {
-           setHasFixedSize(true)
-           layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
-           adapter = adapterPopular
-       }
+        adapterPopular = AdapterPopular(this)
+        binding.recyclerPopular.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = adapterPopular
+        }
     }
 
     private fun setupRecylcerView() {
         adapterChannel = AdapterChannels(this)
         binding.recyclerView.apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = adapterChannel
         }
     }
@@ -86,16 +86,19 @@ class ChannelsFragment : Fragment(), Click {
             it.getSnackbarMsg().observe(viewLifecycleOwner) { msg ->
                 Snackbar.make(binding.root, msg, Snackbar.LENGTH_LONG).show()
             }
+            it.isLoaded().observe(viewLifecycleOwner) { status ->
+                if (status)
+                    binding.progressBar.visibility = View.GONE
+            }
         }
         viewModelPopular.let {
             it.getPopular().observe(viewLifecycleOwner) { popular ->
                 adapterPopular.submitList(popular.body.audio_clips)
             }
         }
-        viewModelRecommended.let{
-            it.getRecommended().observe(viewLifecycleOwner) { recommended->
+        viewModelRecommended.let {
+            it.getRecommended().observe(viewLifecycleOwner) { recommended ->
                 adapterRecommended.submitList(recommended.body)
-                Log.e("","result 6 ${recommended}")
             }
         }
     }

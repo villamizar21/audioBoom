@@ -72,6 +72,10 @@ class InfoChannelFragment : Fragment(), ClickChannel {
             it.getSnackbarMsg().observe(viewLifecycleOwner) {msg ->
                 Snackbar.make(binding.root, msg, Snackbar.LENGTH_LONG).show()
             }
+            it.isLoaded().observe(viewLifecycleOwner) { status ->
+                if (status)
+                    binding.progressBar.visibility = View.GONE
+            }
         }
 
         lifecycleScope.launch {
