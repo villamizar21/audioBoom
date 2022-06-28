@@ -12,6 +12,9 @@ interface ApiService {
     @GET(Constans.AUDIO)
     suspend fun getallaudios(): AudioClips
 
+    @GET(Constans.AUDIO+Constans.POPULAR)
+    suspend fun getPopularaudios(): AudioClips
+
     @GET(Constans.CHANNELS+"/{id}")
     suspend fun getInfChannel(@Path("id") id: String): InfoChannel
 

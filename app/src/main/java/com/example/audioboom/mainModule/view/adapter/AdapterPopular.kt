@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.audioboom.R
 import com.example.audioboom.databinding.ItemChannelsBinding
-import com.example.audioboom.models.channels.Audios
 import com.example.audioboom.mainModule.view.click.Click
+import com.example.audioboom.models.channels.Audios
 
-class AdapterChannels(private val listener: Click) :
+class AdapterPopular(private val listener: Click) :
     ListAdapter<Audios, RecyclerView.ViewHolder>(ChannelDiffCallback()) {
 
     private lateinit var context: Context
@@ -26,8 +26,8 @@ class AdapterChannels(private val listener: Click) :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val channel =getItem(position)
-        with(holder as ViewHolder){
+        val channel = getItem(position)
+        with(holder as ViewHolder) {
             Glide.with(holder.view)
                 .load(channel.channel.urls.logo_image.original)
                 .into(binding.channelPoster)
